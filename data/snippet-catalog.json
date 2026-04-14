@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-04-13",
+  "snippets": [
+    {
+      "id": "SC-001",
+      "title": "Satori Card Renderer (Edge API Route)",
+      "description": "Next.js API route that renders JSX card templates to PNG via @vercel/og ImageResponse on Vercel Edge Runtime.",
+      "stage": "render",
+      "platform": "server",
+      "maturity": "smoke_test",
+      "tech": ["typescript", "satori", "react"],
+      "used_by_domains": ["fishing"],
+      "source_path": "src/app/api/card/route.tsx",
+      "language": "tsx",
+      "dependencies": [
+        { "package": "next", "version": "^15", "dev": false },
+        { "package": "@vercel/og", "version": "bundled with next", "dev": false }
+      ],
+      "related": ["SC-002", "SC-003", "SC-004"],
+      "gotchas": [
+        "Satori supports flexbox only — no CSS Grid, no complex gradients, no blend modes",
+        "All styles must be inline objects, not className or CSS modules",
+        "Custom fonts must be loaded as ArrayBuffer at request time",
+        "ImageResponse constructor limits: max ~50KB of JSX per render"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-002",
+      "title": "Centralized Design Tokens",
+      "description": "Template colour/font/spacing tokens in a single config file, consumed by all card templates and (future) UI components.",
+      "stage": "render",
+      "platform": "universal",
+      "maturity": "smoke_test",
+      "tech": ["typescript"],
+      "used_by_domains": ["fishing"],
+      "source_path": "src/templates/config.ts",
+      "language": "typescript",
+      "dependencies": [],
+      "related": ["SC-001", "SC-003"],
+      "gotchas": [
+        "Tokens are typed as Record<TemplateName, TemplateTokens> — adding a new template requires updating the TemplateName union first",
+        "Font names in tokens must match fonts actually loaded in the satori renderer"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-003",
+      "title": "Satori-Compatible Card Template (Klassisch)",
+      "description": "React component that renders a styled catch card using only satori-compatible CSS (flexbox, inline styles). 55% photo / 45% content split with optional info blocks.",
+      "stage": "render",
+      "platform": "server",
+      "maturity": "smoke_test",
+      "tech": ["tsx", "satori", "react"],
+      "used_by_domains": ["fishing"],
+      "source_path": "src/templates/klassisch.tsx",
+      "language": "tsx",
+      "dependencies": [],
+      "related": ["SC-001", "SC-002"],
+      "gotchas": [
+        "Every <div> needs display:'flex' — satori does not default to block layout",
+        "Images must be absolute URLs or data URIs — no relative paths",
+        "Ecology substitute detection uses text.startsWith('🌿') — fragile if emoji prefix changes"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-004",
+      "title": "Query Param Card Block Parser",
+      "description": "Parses comma-separated block names from URL query params into a typed CardBlockSelection object. All blocks default to false (opt-in).",
+      "stage": "render",
+      "platform": "server",
+      "maturity": "smoke_test",
+      "tech": ["typescript"],
+      "used_by_domains": ["fishing"],
+      "source_path": "src/app/api/card/route.tsx",
+      "source_lines": "25-39",
+      "code": "function parseBlocks(blocksParam: string | null): CardBlockSelection {\n  const active = new Set((blocksParam ?? '').split(',').map(b => b.trim()).filter(Boolean))\n  return {\n    fun_fact: active.has('fun_fact'),\n    name_origin: active.has('name_origin'),\n    recipe_camp: active.has('recipe_camp'),\n    recipe_home: active.has('recipe_home'),\n    habitat: active.has('habitat'),\n    season_hint: active.has('season_hint'),\n    regulations_link: active.has('regulations_link'),\n    moon_solunar: active.has('moon_solunar'),\n    weather: active.has('weather'),\n    gps: active.has('gps'),\n  }\n}",
+      "language": "typescript",
+      "dependencies": [],
+      "related": ["SC-001"],
+      "gotchas": [
+        "Block names must match CardBlockSelection keys exactly — no fuzzy matching",
+        "Returns all-false if blocksParam is null or empty (safe default)"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-005",
+      "title": "Custom CSV Parser (No Dependencies)",
+      "description": "Hand-written CSV parser that handles quoted fields with embedded commas. Replaces csv-parse to keep dependency count low (Rule 11).",
+      "stage": "enrich",
+      "platform": "server",
+      "maturity": "smoke_test",
+      "tech": ["typescript"],
+      "used_by_domains": ["fishing"],
+      "source_path": "scripts/generate-smoke-cards.ts",
+      "source_lines": "59-91",
+      "language": "typescript",
+      "dependencies": [],
+      "related": ["SC-006"],
+      "gotchas": [
+        "Does not handle escaped quotes within quoted fields (\\\")",
+        "Assumes UTF-8 encoding",
+        "Good enough for seed data — use a proper library for user-uploaded CSVs"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-006",
+      "title": "Batch Card Generator Script",
+      "description": "Reads species CSV, iterates species × templates × formats, hits the card API for each combination, and saves PNGs to disk. Used for smoke test batch generation.",
+      "stage": "export",
+      "platform": "server",
+      "maturity": "smoke_test",
+      "tech": ["typescript"],
+      "used_by_domains": ["fishing"],
+      "source_path": "scripts/generate-smoke-cards.ts",
+      "language": "typescript",
+      "dependencies": [
+        { "package": "tsx", "version": "^4", "dev": true }
+      ],
+      "related": ["SC-001", "SC-005"],
+      "gotchas": [
+        "Requires dev server running in a separate terminal (http://localhost:3000)",
+        "Generates 18 species × 3 templates × 2 formats = 108 cards — takes a few minutes",
+        "No retry logic — if one card fails, the script continues but logs the error"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-007",
+      "title": "i18n String Table (German-First)",
+      "description": "Flat key-value string table with dot-separated keys and typed I18nKey export. All UI strings in German, code comments in English.",
+      "stage": "render",
+      "platform": "universal",
+      "maturity": "smoke_test",
+      "tech": ["typescript", "i18n"],
+      "used_by_domains": ["fishing"],
+      "source_path": "src/i18n/de.ts",
+      "language": "typescript",
+      "dependencies": [],
+      "related": ["SC-002", "SC-003"],
+      "gotchas": [
+        "Keys must match across all locale files when translations are added",
+        "No interpolation support yet — add {placeholder} syntax when needed",
+        "I18nKey type is derived via keyof typeof — adding keys auto-updates the type"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-008",
+      "title": "MMKV Offline Request Queue Pattern",
+      "description": "Custom offline queue using MMKV key-value storage. Enqueues pending operations when offline, processes on reconnect via NetInfo listener.",
+      "stage": "identify",
+      "platform": "native",
+      "maturity": "sketch",
+      "tech": ["typescript", "mmkv", "react_native"],
+      "used_by_domains": ["fishing"],
+      "source_path": "docs/NATIVE-APP-TOOLKIT.md",
+      "source_lines": "140-165",
+      "code": "import { MMKV } from 'react-native-mmkv'\n\nconst storage = new MMKV()\nconst QUEUE_KEY = 'pending_requests'\n\nfunction enqueue(request: unknown) {\n  const queue = JSON.parse(storage.getString(QUEUE_KEY) ?? '[]')\n  queue.push({ ...request, queued_at: Date.now() })\n  storage.set(QUEUE_KEY, JSON.stringify(queue))\n}\n\nasync function processQueue() {\n  const queue = JSON.parse(storage.getString(QUEUE_KEY) ?? '[]')\n  const remaining = []\n  for (const req of queue) {\n    try { await submitRequest(req) }\n    catch { remaining.push(req) }\n  }\n  storage.set(QUEUE_KEY, JSON.stringify(remaining))\n}",
+      "language": "typescript",
+      "dependencies": [
+        { "package": "react-native-mmkv", "version": "^3", "dev": false },
+        { "package": "@react-native-community/netinfo", "version": "^11", "dev": false }
+      ],
+      "related": ["SC-009"],
+      "gotchas": [
+        "MMKV stores strings — must JSON.stringify/parse objects",
+        "No built-in retry backoff — add exponential backoff for production",
+        "Queue items persist across app restarts (good for offline-first, but clear stale items)"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-009",
+      "title": "EXIF GPS + Timestamp Extraction",
+      "description": "Selective EXIF field extraction using exifr — pulls only GPS and DateTime to minimise parsing overhead on mobile.",
+      "stage": "capture",
+      "platform": "universal",
+      "maturity": "sketch",
+      "tech": ["typescript", "exifr"],
+      "used_by_domains": ["fishing"],
+      "source_path": "docs/NATIVE-APP-TOOLKIT.md",
+      "source_lines": "75-80",
+      "code": "import exifr from 'exifr'\n\nconst metadata = await exifr.parse(imageBlob, {\n  pick: ['GPSLatitude', 'GPSLongitude', 'DateTime']\n})",
+      "language": "typescript",
+      "dependencies": [
+        { "package": "exifr", "version": "^7", "dev": false }
+      ],
+      "related": ["SC-008"],
+      "gotchas": [
+        "exifr returns undefined for missing fields — check before using",
+        "GPS coordinates need conversion from DMS to decimal degrees in some cases",
+        "expo-image-manipulator strips EXIF — extract BEFORE processing"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    },
+    {
+      "id": "SC-010",
+      "title": "View-Shot Card Capture (React Native)",
+      "description": "Capture a React Native View hierarchy as PNG using react-native-view-shot, then share via react-native-share.",
+      "stage": "export",
+      "platform": "native",
+      "maturity": "sketch",
+      "tech": ["react_native", "view_shot", "share_api"],
+      "used_by_domains": ["fishing"],
+      "source_path": "docs/NATIVE-APP-TOOLKIT.md",
+      "language": "tsx",
+      "dependencies": [
+        { "package": "react-native-view-shot", "version": "^4", "dev": false },
+        { "package": "react-native-share", "version": "^10", "dev": false }
+      ],
+      "related": ["SC-001", "SC-003"],
+      "gotchas": [
+        "Component must be rendered (on-screen or in a hidden view) to capture",
+        "Capture resolution depends on device pixel ratio — set explicit dimensions",
+        "react-native-share can target specific apps (Instagram, WhatsApp) but API varies by platform"
+      ],
+      "cataloged_at": "2026-04-13",
+      "last_verified": "2026-04-13",
+      "cataloged_by": "cowork-session-2026-04-13"
+    }
+  ]
+}

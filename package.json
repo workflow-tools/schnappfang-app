@@ -1,0 +1,25 @@
+{
+  "name": "schnappfang",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Stateless fishing catch card generator — Bayern-first",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "generate-cards": "npx tsx scripts/generate-smoke-cards.ts"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.6.0",
+    "tsx": "^4.0.0",
+    "csv-parse": "^5.5.0"
+  }
+}

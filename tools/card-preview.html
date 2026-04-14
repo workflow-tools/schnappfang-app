@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schnappfang — Card Preview Tool</title>
+<style>
+  :root {
+    --ui-bg: #111;
+    --ui-surface: #1a1a1a;
+    --ui-border: #333;
+    --ui-text: #e0e0e0;
+    --ui-muted: #888;
+    --ui-accent: #d4a853;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--ui-bg); color: var(--ui-text); }
+
+  .app { display: flex; min-height: 100vh; }
+
+  /* Left panel: controls */
+  .controls {
+    width: 360px; min-width: 360px; padding: 20px;
+    background: var(--ui-surface); border-right: 1px solid var(--ui-border);
+    overflow-y: auto; max-height: 100vh;
+  }
+  .controls h1 { font-size: 18px; color: var(--ui-accent); margin-bottom: 4px; }
+  .controls .subtitle { font-size: 12px; color: var(--ui-muted); margin-bottom: 20px; }
+
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12px; color: var(--ui-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field select, .field input, .field textarea {
+    width: 100%; padding: 8px 10px; background: var(--ui-bg); color: var(--ui-text);
+    border: 1px solid var(--ui-border); border-radius: 6px; font-size: 14px;
+  }
+  .field textarea { resize: vertical; min-height: 60px; font-family: inherit; }
+  .field input[type="file"] { padding: 6px; }
+
+  .section-label {
+    font-size: 11px; color: var(--ui-accent); text-transform: uppercase;
+    letter-spacing: 1px; margin: 20px 0 10px; padding-top: 10px;
+    border-top: 1px solid var(--ui-border);
+  }
+
+  .checkbox-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    font-size: 13px; cursor: pointer;
+  }
+  .checkbox-row input { accent-color: var(--ui-accent); }
+
+  .species-quick {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px;
+  }
+  .species-btn {
+    padding: 4px 8px; font-size: 11px; border: 1px solid var(--ui-border);
+    background: var(--ui-bg); color: var(--ui-text); border-radius: 4px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .species-btn:hover { border-color: var(--ui-accent); color: var(--ui-accent); }
+  .species-btn.active { background: var(--ui-accent); color: #000; border-color: var(--ui-accent); }
+
+  /* Right panel: preview */
+  .preview-area {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 30px; gap: 20px;
+  }
+  .preview-header {
+    display: flex; gap: 16px; align-items: center;
+  }
+  .format-btn {
+    padding: 6px 14px; font-size: 12px; border: 1px solid var(--ui-border);
+    background: transparent; color: var(--ui-text); border-radius: 4px; cursor: pointer;
+  }
+  .format-btn.active { background: var(--ui-accent); color: #000; border-color: var(--ui-accent); }
+
+  .card-frame {
+    border: 1px solid var(--ui-border); border-radius: 8px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+  }
+  /* Scale cards to fit screen */
+  .card-frame.feed { width: 405px; height: 506px; } /* 1080/2.667 × 1350/2.667 */
+  .card-frame.stories { width: 300px; height: 533px; } /* 1080/3.6 × 1920/3.6 */
+
+  .card-inner {
+    width: 100%; height: 100%; display: flex; flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .card-photo {
+    width: 100%; height: 55%; overflow: hidden; position: relative;
+    background: #222;
+  }
+  .card-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .card-photo .placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center;
+    justify-content: center; color: #555; font-size: 14px;
+  }
+
+  .card-body { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .card-species { padding: 12px 16px 6px; }
+  .card-species .name-de { font-size: 22px; font-weight: 700; }
+  .card-species .name-la { font-size: 11px; font-style: italic; margin-top: 2px; }
+
+  .card-blocks { flex: 1; padding: 4px 16px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+  .info-block { border-radius: 4px; padding: 6px 10px; }
+  .info-block .block-label { font-size: 8px; font-weight: 600; margin-bottom: 2px; }
+  .info-block .block-text { font-size: 9px; line-height: 1.35; }
+
+  .card-footer {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding: 4px 16px 8px; font-size: 8px;
+  }
+  .card-footer .meta { display: flex; flex-direction: column; gap: 1px; }
+  .card-footer .watermark { opacity: 0.3; }
+
+  /* Fun-o-meter */
+  .fun-meter {
+    background: var(--ui-surface); border: 1px solid var(--ui-border);
+    border-radius: 8px; padding: 16px; width: 100%; max-width: 500px;
+  }
+  .fun-meter h3 { font-size: 13px; color: var(--ui-accent); margin-bottom: 8px; }
+  .fun-checks { display: flex; flex-direction: column; gap: 6px; }
+  .fun-check { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .fun-check .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .fun-check .dot.green { background: #4ade80; }
+  .fun-check .dot.yellow { background: #facc15; }
+  .fun-check .dot.red { background: #f87171; }
+  .fun-check .dot.gray { background: #555; }
+
+  .export-bar {
+    display: flex; gap: 8px;
+  }
+  .export-btn {
+    padding: 8px 16px; background: var(--ui-accent); color: #000;
+    border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+    font-size: 13px;
+  }
+  .export-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- LEFT: Controls -->
+  <div class="controls">
+    <h1>🐟 Schnappfang</h1>
+    <div class="subtitle">Card Preview Tool — Smoke Test</div>
+
+    <div class="section-label">Quick Species</div>
+    <div class="species-quick" id="speciesQuick"></div>
+
+    <div class="field">
+      <label>Fischart (Deutsch)</label>
+      <input type="text" id="speciesDe" value="Hecht" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Lateinischer Name</label>
+      <input type="text" id="speciesLa" value="Esox lucius" oninput="render()">
+    </div>
+
+    <div class="section-label">Template</div>
+    <div class="field">
+      <select id="template" onchange="render()">
+        <option value="klassisch">🌲 Klassisch</option>
+        <option value="bayern">🔷 Bayern</option>
+        <option value="lagerfeuer">🔥 Lagerfeuer</option>
+      </select>
+    </div>
+
+    <div class="section-label">Foto</div>
+    <div class="field">
+      <label>Foto-URL</label>
+      <input type="text" id="photoUrl" placeholder="https://... oder leer für Platzhalter" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Oder Datei wählen</label>
+      <input type="file" id="photoFile" accept="image/*" onchange="handlePhotoFile(event)">
+    </div>
+
+    <div class="section-label">Info-Blöcke (optional)</div>
+    <div id="blockToggles"></div>
+
+    <div class="section-label">Block-Inhalte</div>
+    <div class="field">
+      <label>Wusstest du?</label>
+      <textarea id="funFact" oninput="render()">Der Hecht kann bis zu 1,5 m lang werden und frisst Fische bis zur Hälfte seiner eigenen Körperlänge. In Bayern wird er auch 'Wasserwolf' genannt.</textarea>
+    </div>
+    <div class="field">
+      <label>Namensherkunft</label>
+      <textarea id="nameOrigin" oninput="render()">Mhd. 'hëchet' — der Stecher, nach dem spitzen Maul</textarea>
+    </div>
+    <div class="field">
+      <label>🔥 Am Wasser (Rezept)</label>
+      <textarea id="recipeCamp" oninput="render()">Hecht am Spieß über Lagerfeuer — Kräuterbutter und Zitrone</textarea>
+    </div>
+    <div class="field">
+      <label>Saison</label>
+      <textarea id="seasonHint" oninput="render()">Frühling bis Herbst — im Sommer besonders aktiv in flachen Uferzonen</textarea>
+    </div>
+    <div class="field">
+      <label>🌙 Mond & Beißzeit</label>
+      <textarea id="moonSolunar" oninput="render()">Raubfische beißen oft besser bei Vollmond und Neumond — Hechte sind dämmerungsaktiv</textarea>
+    </div>
+
+    <div class="section-label">Meta</div>
+    <div class="field">
+      <label>Angler</label>
+      <input type="text" id="anglerName" placeholder="Optional" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Datum</label>
+      <input type="text" id="catchDate" placeholder="z.B. 13. April 2026" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Ort</label>
+      <input type="text" id="location" placeholder="z.B. Naab bei Schwandorf" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Länge (cm)</label>
+      <input type="number" id="lengthCm" placeholder="" oninput="render()">
+    </div>
+    <div class="field">
+      <label>Gewicht (kg)</label>
+      <input type="number" id="weightKg" placeholder="" step="0.1" oninput="render()">
+    </div>
+  </div>
+
+  <!-- RIGHT: Preview -->
+  <div class="preview-area">
+    <div class="preview-header">
+      <button class="format-btn active" onclick="setFormat('feed')">Feed 1080×1350</button>
+      <button class="format-btn" onclick="setFormat('stories')">Stories 1080×1920</button>
+    </div>
+
+    <div class="card-frame feed" id="cardFrame">
+      <div class="card-inner" id="cardInner">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <div class="fun-meter" id="funMeter">
+      <h3>📊 Share-Appeal Check</h3>
+      <div class="fun-checks" id="funChecks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Species data from CSV ─────────────────────────────────
+const SPECIES_DATA = {
+  "Hecht": { la: "Esox lucius", fun: "Der Hecht kann bis zu 1,5 m lang werden und frisst Fische bis zur Hälfte seiner eigenen Körperlänge. In Bayern wird er auch 'Wasserwolf' genannt.", origin: "Mhd. 'hëchet' — der Stecher, nach dem spitzen Maul", recipe: "Hecht am Spieß über Lagerfeuer — Kräuterbutter und Zitrone", season: "Frühling bis Herbst — im Sommer besonders aktiv in flachen Uferzonen", moon: "Raubfische beißen oft besser bei Vollmond und Neumond — Hechte sind dämmerungsaktiv" },
+  "Zander": { la: "Sander lucioperca", fun: "Der Zander hat die größten Fangzähne aller heimischen Süßwasserfische. Sein Fleisch gilt in der gehobenen deutschen Küche als edelster Süßwasserfisch.", origin: "'Zander' aus dem Slawischen — der 'Zahnfisch'", recipe: "Zanderfilet in Alufolie am Feuer — Weißwein und Dill", season: "Ganzjährig fangbar — Herbst und Winter sind Topzeiten in Bayern", moon: "Nachtaktiv — Mondphasen beeinflussen die Beißzeiten merklich" },
+  "Wels": { la: "Silurus glanis", fun: "Der Wels ist der größte Süßwasserfisch Europas — über 2,5 m und 100 kg in der Donau bei Passau. Sein Fleisch ist über 10% Fett und komplett grätenfrei.", origin: "'Wels' / 'Waller' — urgermanisch, verwandt mit 'wallen' (sich wälzen)", recipe: "Welssteaks am Grill — Paprikamarinade nach ungarischer Art", season: "Sommer — nachtaktiv bei warmem Wasser über 15°C", moon: "Extrem nachtaktiv — Neumond-Nächte ohne Mondlicht gelten als beste Beißzeit" },
+  "Huchen": { la: "Hucho hucho", fun: "Der Huchen ist einer der seltensten Süßwasserfische Europas und heißt auch Donaulachs. Bayern beherbergt einen bedeutenden Teil des weltweiten Bestands.", origin: "'Huchen' — bayerisch, möglicherweise verwandt mit 'Huch' (Schreck/Überraschung)", recipe: "🌿 Der Huchen ist der Topräuber bayerischer Flüsse — er frisst Äschen, Nasen und sogar Wasserratten.", season: "Streng limitiert — nur auf Anfrage beim Gewässerbewirtschafter", moon: "Kaum relevant — Huchen-Angeln ist hochspezialisiert und selten erlaubt" },
+  "Bachforelle": { la: "Salmo trutta fario", fun: "Die Bachforelle ist Bayerns beliebtester Speisefisch aus dem Gebirgsbach. Ihr Punktmuster ist so einzigartig wie ein Fingerabdruck — keine zwei Bachforellen sehen gleich aus.", origin: "'Forelle' von lat. 'tructa' über ahd. 'forhana' — die Gefleckte", recipe: "Forelle in Zeitungspapier am Lagerfeuer — Butter und frische Kräuter", season: "Frühling bis Herbst — klassische Fliegenfisch-Saison", moon: "Forellen sind tagaktiv — Mondphasen weniger entscheidend als Insektenschlupf" },
+  "Regenbogenforelle": { la: "Oncorhynchus mykiss", fun: "Zwischen 1880 und 1884 in Bayern eingebürgert. Die Regenbogenforelle ist der meistbesetzte Salmonide in deutschen Gewässern — ein Neozoon das zum Stammgast wurde.", origin: "'Regenbogen-' nach dem schillernden Seitenstreifen", recipe: "Regenbogenforelle am Räucherhaken über Buchenholz", season: "Ganzjährig in Besatzgewässern — Forellenseen haben eigene Regeln", moon: "Weniger mondabhängig — beißt relativ zuverlässig zu allen Zeiten" },
+  "Seeforelle": { la: "Salmo trutta lacustris", fun: "Die Seeforelle kann über 10 kg schwer werden und ist der 'Hai der Voralpenseen'. Sie steigt zum Laichen in Zuflüsse auf — ein Naturschauspiel im Herbst.", origin: "'See-' + 'Forelle' — die Seeform der Bachforelle", recipe: "Seeforelle am offenen Feuer — ganze Forelle mit Wacholder", season: "Frühling bis Herbst — Schleppfischen auf Voralpenseen", moon: "Tiefwasserfisch — Mondphasen sekundär gegenüber Wassertemperatur und Tiefe" },
+  "Saibling": { la: "Salvelinus umbla", fun: "Der Seesaibling hat den leuchtend orangefarbenen Bauch, der ihn zum vielleicht schönsten heimischen Süßwasserfisch macht. Sein zartes, lachsrosa Fleisch erzielt am Markt höhere Preise als Regenbogenforelle.", origin: "'Saibling' von mhd. 'sëlbling' — der Buntfarbige", recipe: "Saibling auf Zedernholzbrett am Feuer — Honig-Soja-Glasur", season: "Ganzjährig in tiefen Seen — Herbst für Bachsaiblinge", moon: "Tiefwasserbewohner — wenig Mondeinfluss nachweisbar" },
+  "Äsche": { la: "Thymallus thymallus", fun: "Frisch gefangene Äschen verströmen tatsächlich einen dezenten Thymianduft — daher auch der lateinische Name. Ihre segelartige Rückenflosse macht sie unverwechselbar.", origin: "'Äsche' von lat. 'thymallus' — riecht frisch nach Thymian", recipe: "Äsche am Steckerl über dem Feuer — mit Bergkräutern", season: "Status je nach Gewässer stark unterschiedlich — lokal informieren", moon: "Tagaktiv — Mondphasen wenig relevant; Insektenschlupf entscheidend" },
+  "Karpfen": { la: "Cyprinus carpio", fun: "Die Oberpfalz ist eines der ältesten Karpfenzuchtgebiete Europas. 'Oberpfälzer Karpfen' trägt eine EU-geschützte geografische Angabe (g.g.A.). Karpfen zu Weihnachten und Silvester ist in Bayern Tradition.", origin: "'Karpfen' über lat. 'carpa' — keltischen Ursprungs", recipe: "Stockfisch-Karpfen am Spieß — fränkische Tradition", season: "Herbst ist Hauptsaison — Abfischung der Karpfenteiche ab Oktober", moon: "Karpfen beißen besser bei Warmfronten als bei Mondphasen — Wetter wichtiger als Mond" },
+  "Schleie": { la: "Tinca tinca", fun: "Die Schleie hat eine heilende Schleimschicht — im Mittelalter wurde sie als 'Doktorfisch' auf Wunden gelegt. Ihr goldgrüner Schimmer macht sie zu einem der schönsten Friedfische.", origin: "'Schleie' von mhd. 'slīe' — die Schleimige (nach der Schleimschicht)", recipe: "Schleie im Räucherofen — mild und butterweich", season: "Frühling bis Herbst — aktiv bei warmem Wasser über 18°C", moon: "Dämmerungsaktiv — Neumond-Abende können produktiv sein" },
+  "Brachse": { la: "Abramis brama", fun: "Große Brachsen werden in Bayern 'Blei' genannt. Ein Schwarm fressender Brachsen kann den Gewässergrund regelrecht umpflügen und hinterlässt sichtbare Fresstrichter.", origin: "'Brachse' / 'Brasse' — von ahd. 'brahsema', Breite/Platte", recipe: "Brachsenfilet geräuchert — die Gräten lösen sich besser", season: "Ganzjährig — Frühsommer am produktivsten", moon: "Grundfisch — wenig mondabhängig" },
+  "Rotauge": { la: "Rutilus rutilus", fun: "Das Rotauge ist der häufigste Fisch Bayerns. Ein 40-cm-Rotauge ist eine echte Rarität und wird unter Friedfisch-Anglern als Trophäe gefeiert.", origin: "'Rotauge' / 'Plötze' — nach den namensgebenden roten Augen", recipe: "Rotaugen über Erlenholz räuchern — Snack am Wasser", season: "Ganzjährig — Frühling und Herbst am besten", moon: "Schwarmfisch — Beißphasen korrelieren eher mit Tageszeit als Mondphase" },
+  "Aitel": { la: "Squalius cephalus", fun: "Der Aitel ist der Allesfresser unter den bayerischen Fischen — er frisst Kirschen, Käse und sogar kleine Mäuse die ins Wasser fallen.", origin: "'Aitel' / 'Döbel' — 'Aitel' ist bairisch, 'Döbel' norddeutsch", recipe: "Aitel am Grill mit Knoblauch-Kräuterbutter", season: "Ganzjährig — Sommer ist Topzeit für Oberflächenfang", moon: "Oberflächennah bei Dämmerung — Mondlicht beeinflusst Aktivität" },
+  "Flussbarsch": { la: "Perca fluviatilis", fun: "Der Flussbarsch ist der beliebteste Zielfisch für Angeleinsteiger in Bayern. Seine Streifen sind wie Fingerabdrücke — keine zwei Barsche sehen gleich aus.", origin: "'Barsch' von ahd. 'bars' — der Stachelige (nach den Rückenflossenstacheln)", recipe: "Barschfilet am Lagerfeuer — knusprig in der Pfanne", season: "Ganzjährig — Herbst ist die beste Großbarsch-Saison", moon: "Raubfisch — Dämmerung produktiver als spezifische Mondphase" },
+  "Aal": { la: "Anguilla anguilla", fun: "Der Europäische Aal wandert zum Laichen über 5.000 km bis in die Sargassosee — und niemand hat je einen Aal beim Laichen beobachtet. Eines der größten Rätsel der Biologie.", origin: "'Aal' — urgermanisch, eines der ältesten Fischwörter überhaupt", recipe: "Aal am Räucherhaken — der Klassiker am Wasser", season: "Sommer — nachtaktiv bei warmem Wetter", moon: "Nachtaktiv — Neumond-Nächte sind die besten Aalnächte" },
+  "Renke": { la: "Coregonus spp.", fun: "Die Renke ist DER Speisefisch der bayerischen Voralpenseen. Renke Müllerin am Starnberger See ist ein Kulturgut.", origin: "'Renke' bayerisch / 'Felchen' schwäbisch — regionaler Namensklassiker", recipe: "Renke am Steckerl über dem Feuer — simpel und perfekt", season: "Regeln stark gewässerabhängig — beim Fischereiverein nachfragen", moon: "Tiefwasserfisch — Mondphase sekundär zu Temperaturschichtung" },
+  "Nase": { la: "Chondrostoma nasus", fun: "Die Nase war einst einer der häufigsten Fische bayerischer Flüsse. Der Bestand ist stark zurückgegangen. In manchen Regionen laufen Wiederansiedlungsprogramme.", origin: "'Nase' — nach dem nasenartigen Überbiss der Oberlippe", recipe: "🌿 Die Nase schabt mit ihrer verhornten Unterlippe Algen von Steinen — eine einzigartige Ernährungsweise.", season: "Stark regional unterschiedlich — viele Bestände geschützt — lokal informieren", moon: "Schwarmfisch — Massenwanderungen zum Laichen sind mondunabhängig" },
+};
+
+// ── Template tokens ───────────────────────────────────────
+const TEMPLATES = {
+  klassisch: {
+    bg: '#1a2e1a', bgBlock: '#2a4a2a', text: '#f5f0e8',
+    textMuted: '#b8c4a8', accent: '#d4a853', radius: 8
+  },
+  bayern: {
+    bg: '#0b3d91', bgBlock: '#1a4fa0', text: '#ffffff',
+    textMuted: '#a8c8e8', accent: '#ffffff', radius: 4,
+    borderLeft: '2px solid #ffffff'
+  },
+  lagerfeuer: {
+    bg: '#2d1810', bgBlock: '#3d2820', text: '#f5e6d0',
+    textMuted: '#c8a882', accent: '#e8732a', radius: 12
+  }
+};
+
+let currentFormat = 'feed';
+let photoDataUrl = null;
+
+// ── Block config ──────────────────────────────────────────
+const BLOCKS = [
+  { id: 'fun_fact', label: 'Wusstest du?', icon: '💡', default: true },
+  { id: 'name_origin', label: 'Namensherkunft', icon: '📖', default: true },
+  { id: 'recipe_camp', label: 'Am Wasser', icon: '🔥', default: true },
+  { id: 'season_hint', label: 'Saison', icon: '📅', default: false },
+  { id: 'moon_solunar', label: 'Mond & Beißzeit', icon: '🌙', default: false },
+];
+
+// ── Share-Appeal checks ───────────────────────────────────
+function getShareAppealChecks() {
+  const sp = document.getElementById('speciesDe').value;
+  const photo = photoDataUrl || document.getElementById('photoUrl').value;
+  const funFact = document.getElementById('funFact').value;
+  const origin = document.getElementById('nameOrigin').value;
+  const recipe = document.getElementById('recipeCamp').value;
+  const location = document.getElementById('location').value;
+  const date = document.getElementById('catchDate').value;
+
+  const activeBlocks = BLOCKS.filter(b => document.getElementById('toggle_' + b.id)?.checked).length;
+
+  return [
+    {
+      text: 'Has a photo (the #1 share driver)',
+      status: photo ? 'green' : 'red',
+    },
+    {
+      text: 'Species name is present',
+      status: sp ? 'green' : 'red',
+    },
+    {
+      text: 'Has a "wow" fun fact (social currency)',
+      status: funFact && funFact.length > 30 ? 'green' : funFact ? 'yellow' : 'gray',
+    },
+    {
+      text: 'Name origin adds cultural depth',
+      status: origin && origin.length > 10 ? 'green' : 'gray',
+    },
+    {
+      text: 'Recipe makes it actionable (practical value)',
+      status: recipe && !recipe.startsWith('🌿') ? 'green' : recipe ? 'yellow' : 'gray',
+    },
+    {
+      text: 'Location grounds the story (identity signal)',
+      status: location ? 'green' : 'yellow',
+    },
+    {
+      text: 'Date makes it a memory, not a stock image',
+      status: date ? 'green' : 'yellow',
+    },
+    {
+      text: '2–3 info blocks (sweet spot — more feels cluttered)',
+      status: activeBlocks >= 2 && activeBlocks <= 3 ? 'green' : activeBlocks === 1 ? 'yellow' : activeBlocks > 3 ? 'yellow' : 'gray',
+    },
+    {
+      text: 'Card is NOT overloaded (≤3 blocks for feed)',
+      status: activeBlocks <= 3 ? 'green' : 'red',
+    },
+  ];
+}
+
+// ── Init ──────────────────────────────────────────────────
+function init() {
+  // Species quick-select buttons
+  const quickDiv = document.getElementById('speciesQuick');
+  for (const name of Object.keys(SPECIES_DATA)) {
+    const btn = document.createElement('button');
+    btn.className = 'species-btn' + (name === 'Hecht' ? ' active' : '');
+    btn.textContent = name;
+    btn.onclick = () => selectSpecies(name);
+    quickDiv.appendChild(btn);
+  }
+
+  // Block toggles
+  const toggleDiv = document.getElementById('blockToggles');
+  for (const block of BLOCKS) {
+    const row = document.createElement('label');
+    row.className = 'checkbox-row';
+    row.innerHTML = `<input type="checkbox" id="toggle_${block.id}" ${block.default ? 'checked' : ''} onchange="render()"> ${block.icon} ${block.label}`;
+    toggleDiv.appendChild(row);
+  }
+
+  render();
+}
+
+function selectSpecies(name) {
+  const data = SPECIES_DATA[name];
+  if (!data) return;
+
+  document.getElementById('speciesDe').value = name;
+  document.getElementById('speciesLa').value = data.la;
+  document.getElementById('funFact').value = data.fun;
+  document.getElementById('nameOrigin').value = data.origin;
+  document.getElementById('recipeCamp').value = data.recipe;
+  document.getElementById('seasonHint').value = data.season;
+  document.getElementById('moonSolunar').value = data.moon;
+
+  // Update active button
+  document.querySelectorAll('.species-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent === name);
+  });
+
+  render();
+}
+
+function handlePhotoFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    photoDataUrl = e.target.result;
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+
+function setFormat(fmt) {
+  currentFormat = fmt;
+  const frame = document.getElementById('cardFrame');
+  frame.className = 'card-frame ' + fmt;
+  document.querySelectorAll('.format-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(fmt));
+  });
+  render();
+}
+
+function render() {
+  const t = TEMPLATES[document.getElementById('template').value];
+  const card = document.getElementById('cardInner');
+  const photo = photoDataUrl || document.getElementById('photoUrl').value;
+
+  const activeBlocks = [];
+  if (document.getElementById('toggle_fun_fact')?.checked) {
+    activeBlocks.push({ label: '💡 Wusstest du?', text: document.getElementById('funFact').value });
+  }
+  if (document.getElementById('toggle_name_origin')?.checked) {
+    activeBlocks.push({ label: '📖 Namensherkunft', text: document.getElementById('nameOrigin').value });
+  }
+  if (document.getElementById('toggle_recipe_camp')?.checked) {
+    const recipe = document.getElementById('recipeCamp').value;
+    const isEco = recipe.startsWith('🌿');
+    activeBlocks.push({ label: isEco ? '🌿 Ökologie' : '🔥 Am Wasser', text: recipe.replace('🌿 ', '') });
+  }
+  if (document.getElementById('toggle_season_hint')?.checked) {
+    activeBlocks.push({ label: '📅 Saison', text: document.getElementById('seasonHint').value });
+  }
+  if (document.getElementById('toggle_moon_solunar')?.checked) {
+    activeBlocks.push({ label: '🌙 Mond & Beißzeit', text: document.getElementById('moonSolunar').value });
+  }
+
+  const meta = [];
+  const date = document.getElementById('catchDate').value;
+  const loc = document.getElementById('location').value;
+  const len = document.getElementById('lengthCm').value;
+  const wt = document.getElementById('weightKg').value;
+  const angler = document.getElementById('anglerName').value;
+  if (date) meta.push(date);
+  if (loc) meta.push(loc);
+  if (len) meta.push(len + ' cm');
+  if (wt) meta.push(wt + ' kg');
+  if (angler) meta.push(angler);
+
+  const borderStyle = t.borderLeft ? `border-left: ${t.borderLeft};` : '';
+
+  card.style.background = t.bg;
+  card.style.color = t.text;
+
+  card.innerHTML = `
+    <div class="card-photo">
+      ${photo
+        ? `<img src="${photo}" alt="Fangfoto">`
+        : `<div class="placeholder">📷 Foto hinzufügen</div>`
+      }
+    </div>
+    <div class="card-body">
+      <div class="card-species">
+        <div class="name-de" style="color: ${t.accent}">${document.getElementById('speciesDe').value}</div>
+        <div class="name-la" style="color: ${t.textMuted}">${document.getElementById('speciesLa').value}</div>
+      </div>
+      <div class="card-blocks">
+        ${activeBlocks.filter(b => b.text).map(b => `
+          <div class="info-block" style="background: ${t.bgBlock}; border-radius: ${t.radius}px; ${borderStyle}">
+            <div class="block-label" style="color: ${t.accent}">${b.label}</div>
+            <div class="block-text" style="color: ${t.text}">${b.text}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card-footer">
+        <div class="meta" style="color: ${t.textMuted}">
+          ${meta.map(m => `<span>${m}</span>`).join('')}
+        </div>
+        <div class="watermark" style="color: ${t.textMuted}">schnappfang.de</div>
+      </div>
+    </div>
+  `;
+
+  // Update share-appeal meter
+  const checks = getShareAppealChecks();
+  document.getElementById('funChecks').innerHTML = checks.map(c =>
+    `<div class="fun-check"><span class="dot ${c.status}"></span> ${c.text}</div>`
+  ).join('');
+}
+
+init();
+</script>
+</body>
+</html>

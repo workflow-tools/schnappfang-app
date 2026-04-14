@@ -1,0 +1,773 @@
+{
+  "schema_version": "1.0",
+  "bundesland": "bayern",
+  "stand": "2026-04",
+  "source": "bayern-species-smoketest.csv + manual enrichment",
+  "species_count": 18,
+  "species": {
+    "esox_lucius": {
+      "name_de": "Hecht",
+      "name_la": "Esox lucius",
+      "priority_tier": 1,
+      "typical_size_cm": "40–130",
+      "habitat_de": "Seen, Flüsse, Altarme — lauert regungslos in Krautfeldern",
+      "german_name_origin": "Mhd. 'hëchet' — der Stecher, nach dem spitzen Maul",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Hecht kann bis zu 1,5 m lang werden und frisst Fische bis zur Hälfte seiner eigenen Körperlänge. In Bayern wird er auch 'Wasserwolf' genannt.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "Mhd. 'hëchet' — der Stecher, nach dem spitzen Maul",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Hecht am Spieß über Lagerfeuer — Kräuterbutter und Zitrone",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Hechtfilet gebraten mit Kartoffel-Gurkensalat nach fränkischer Art",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Frühling bis Herbst — im Sommer besonders aktiv in flachen Uferzonen",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Raubfische beißen oft besser bei Vollmond und Neumond — Hechte sind dämmerungsaktiv",
+          "share_appeal": 3,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "Längliches Motiv — Querformat bevorzugt. Oft mit Angler im Bild wegen Größe."
+    },
+    "sander_lucioperca": {
+      "name_de": "Zander",
+      "name_la": "Sander lucioperca",
+      "priority_tier": 1,
+      "typical_size_cm": "40–100",
+      "habitat_de": "Tiefe Seen und langsam fließende Flüsse — bevorzugt trübes Wasser",
+      "german_name_origin": "'Zander' aus dem Slawischen — der 'Zahnfisch'",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Zander hat die größten Fangzähne aller heimischen Süßwasserfische. Sein Fleisch gilt in der gehobenen deutschen Küche als edelster Süßwasserfisch.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Zander' aus dem Slawischen — der 'Zahnfisch'",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Zanderfilet in Alufolie am Feuer — Weißwein und Dill",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Zander auf der Haut gebraten mit Petersilienwurzel-Püree",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig fangbar — Herbst und Winter sind Topzeiten in Bayern",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Nachtaktiv — Mondphasen beeinflussen die Beißzeiten merklich",
+          "share_appeal": 3,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "KEIN BLITZ: Zander haben ein Tapetum lucidum (Reflexschicht im Auge für Nachtsicht) — Blitz erzeugt unnatürliches Augenleuchten. Natürliches Licht oder Dämmerung nutzen."
+    },
+    "silurus_glanis": {
+      "name_de": "Wels",
+      "name_la": "Silurus glanis",
+      "priority_tier": 1,
+      "typical_size_cm": "60–250+",
+      "habitat_de": "Tiefe Flussabschnitte, Stauseen, Baggerseen — Donau-Einzugsgebiet",
+      "german_name_origin": "'Wels' / 'Waller' — urgermanisch, verwandt mit 'wallen' (sich wälzen)",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Wels ist der größte Süßwasserfisch Europas — über 2,5 m und 100 kg in der Donau bei Passau. Sein Fleisch ist über 10% Fett und komplett grätenfrei. In Bayern heißt er auch Waller.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Wels' / 'Waller' — urgermanisch, verwandt mit 'wallen' (sich wälzen)",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Welssteaks am Grill — Paprikamarinade nach ungarischer Art",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Wels-Gulasch mit Kartoffelknödeln — ein Donau-Klassiker",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Sommer — nachtaktiv bei warmem Wasser über 15°C",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Extrem nachtaktiv — Neumond-Nächte ohne Mondlicht gelten als beste Beißzeit",
+          "share_appeal": 4,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "TROPHY: Oft extremes Querformat nötig. Kartenvorlage muss sehr breites Motiv verkraften."
+    },
+    "hucho_hucho": {
+      "name_de": "Huchen",
+      "name_la": "Hucho hucho",
+      "priority_tier": 1,
+      "typical_size_cm": "60–120",
+      "habitat_de": "Schnell fließende Flussabschnitte — der 'Donaulachs'",
+      "german_name_origin": "'Huchen' — bayerisch, möglicherweise verwandt mit 'Huch' (Schreck/Überraschung)",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Huchen ist einer der seltensten Süßwasserfische Europas und heißt auch Donaulachs. Bayern beherbergt einen bedeutenden Teil des weltweiten Bestands. Fang nur mit Sondergenehmigung.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Huchen' — bayerisch, möglicherweise verwandt mit 'Huch' (Schreck/Überraschung)",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "ecology_predator": {
+          "text_de": "🌿 Der Huchen ist der Topräuber bayerischer Flüsse — er frisst Äschen, Nasen und sogar Wasserratten. Seine größten natürlichen Feinde: Kormoran und Fischotter, beide in Bayern heiß diskutiert.",
+          "share_appeal": 5,
+          "icon": "🌿",
+          "is_ecology_substitute": true,
+          "substitutes_for": "recipe_camp"
+        },
+        "ecology_behavior": {
+          "text_de": "🌿 Bayern hält einen der letzten stabilen Wildbestände weltweit. Schlüsselgewässer: Pfreimd, Ilz, Isar. Naturschutzbehörden überwachen jedes Laichrevier einzeln.",
+          "share_appeal": 4,
+          "icon": "🌿",
+          "is_ecology_substitute": true,
+          "substitutes_for": "recipe_home"
+        },
+        "season_hint": {
+          "text_de": "Streng limitiert — nur auf Anfrage beim Gewässerbewirtschafter",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Kaum relevant — Huchen-Angeln ist hochspezialisiert und selten erlaubt",
+          "share_appeal": 1,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "SELTEN: Wenn ein Kontakt ein Huchen-Foto hat ist es ein Jackpot-Motiv. Royalty-free Fallback schwierig."
+    },
+    "salmo_trutta_fario": {
+      "name_de": "Bachforelle",
+      "name_la": "Salmo trutta fario",
+      "priority_tier": 2,
+      "typical_size_cm": "20–60",
+      "habitat_de": "Kalte, sauerstoffreiche Bäche und Flüsse — Oberpfälzer Wald",
+      "german_name_origin": "'Forelle' von lat. 'tructa' über ahd. 'forhana' — die Gefleckte",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Bachforelle ist Bayerns beliebtester Speisefisch aus dem Gebirgsbach. Ihr Punktmuster ist so einzigartig wie ein Fingerabdruck — keine zwei Bachforellen sehen gleich aus.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Forelle' von lat. 'tructa' über ahd. 'forhana' — die Gefleckte",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Forelle in Zeitungspapier am Lagerfeuer — Butter und frische Kräuter",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Forelle Müllerin — gebräunt in Butter mit Mandeln und Zitrone",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Frühling bis Herbst — klassische Fliegenfisch-Saison",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Forellen sind tagaktiv — Mondphasen weniger entscheidend als Insektenschlupf",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "Wunderschöne Punkte und Farben — Foto im Wasser oder auf nassem Stein zeigt Zeichnung am besten. Die Schleimschicht (Mucin) hält die Farben leuchtend; trocknet sie ab, verblassen die Punkte sofort."
+    },
+    "oncorhynchus_mykiss": {
+      "name_de": "Regenbogenforelle",
+      "name_la": "Oncorhynchus mykiss",
+      "priority_tier": 2,
+      "typical_size_cm": "25–60",
+      "habitat_de": "Besatzfisch in Seen und Teichen — ursprünglich aus Nordamerika",
+      "german_name_origin": "'Regenbogen-' nach dem schillernden Seitenstreifen",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Zwischen 1880 und 1884 in Bayern eingebürgert. Die Regenbogenforelle ist der meistbesetzte Salmonide in deutschen Gewässern — ein Neozoon das zum Stammgast wurde.",
+          "share_appeal": 4,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Regenbogen-' nach dem schillernden Seitenstreifen",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Regenbogenforelle am Räucherhaken über Buchenholz",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Forellenfilet mit Meerrettich-Sahnesauce — bayerisch-frisch",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig in Besatzgewässern — Forellenseen haben eigene Regeln",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Weniger mondabhängig — beißt relativ zuverlässig zu allen Zeiten",
+          "share_appeal": 1,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "Regenbogenstreifen kommt im Foto oft nicht raus — seitliches Licht hilft."
+    },
+    "salmo_trutta_lacustris": {
+      "name_de": "Seeforelle",
+      "name_la": "Salmo trutta lacustris",
+      "priority_tier": 2,
+      "typical_size_cm": "40–90",
+      "habitat_de": "Tiefe Voralpenseen — Walchensee, Königssee, Chiemsee",
+      "german_name_origin": "'See-' + 'Forelle' — die Seeform der Bachforelle",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Seeforelle kann über 10 kg schwer werden und ist der 'Hai der Voralpenseen'. Sie steigt zum Laichen in Zuflüsse auf — ein Naturschauspiel im Herbst.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'See-' + 'Forelle' — die Seeform der Bachforelle",
+          "share_appeal": 2,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Seeforelle am offenen Feuer — ganze Forelle mit Wacholder",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Seeforellenfilet pochiert mit Safransauce",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Frühling bis Herbst — Schleppfischen auf Voralpenseen",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Tiefwasserfisch — Mondphasen sekundär gegenüber Wassertemperatur und Tiefe",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "ALPENSEE: Foto zeigt oft Bergkulisse im Hintergrund — starkes Kartenmotiv."
+    },
+    "salvelinus_umbla": {
+      "name_de": "Saibling",
+      "name_la": "Salvelinus umbla",
+      "priority_tier": 2,
+      "typical_size_cm": "20–50",
+      "habitat_de": "Kalte, tiefe Alpenseen und Gebirgsbäche",
+      "german_name_origin": "'Saibling' von mhd. 'sëlbling' — der Buntfarbige",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Seesaibling hat den leuchtend orangefarbenen Bauch, der ihn zum vielleicht schönsten heimischen Süßwasserfisch macht. Sein zartes, lachsrosa Fleisch erzielt am Markt höhere Preise als Regenbogenforelle.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Saibling' von mhd. 'sëlbling' — der Buntfarbige",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Saibling auf Zedernholzbrett am Feuer — Honig-Soja-Glasur",
+          "share_appeal": 5,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Saiblingsfilet auf Blattspinat mit Zitronenbutter",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig in tiefen Seen — Herbst für Bachsaiblinge",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Tiefwasserbewohner — wenig Mondeinfluss nachweisbar",
+          "share_appeal": 1,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "FARBE: Der orangefarbene Bauch ist DAS Fotomotiv. Nassen Fisch fotografieren — Farben sind intensiver."
+    },
+    "thymallus_thymallus": {
+      "name_de": "Äsche",
+      "name_la": "Thymallus thymallus",
+      "priority_tier": 2,
+      "typical_size_cm": "25–50",
+      "habitat_de": "Klare Fließgewässer mit kiesigem Grund — die 'Äschenregion'",
+      "german_name_origin": "'Äsche' von lat. 'thymallus' — riecht frisch nach Thymian",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Frisch gefangene Äschen verströmen tatsächlich einen dezenten Thymianduft — daher auch der lateinische Name. Ihre segelartige Rückenflosse macht sie unverwechselbar.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Äsche' von lat. 'thymallus' — riecht frisch nach Thymian",
+          "share_appeal": 5,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Äsche am Steckerl über dem Feuer — mit Bergkräutern",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Äschenfilet gedünstet auf Gemüsebett — zarter als Forelle",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Status je nach Gewässer stark unterschiedlich — lokal informieren",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Tagaktiv — Mondphasen wenig relevant; Insektenschlupf entscheidend",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "FLOSSE: Die große Rückenflosse muss im Bild sein — das ist das Erkennungsmerkmal."
+    },
+    "cyprinus_carpio": {
+      "name_de": "Karpfen",
+      "name_la": "Cyprinus carpio",
+      "priority_tier": 3,
+      "typical_size_cm": "30–100",
+      "habitat_de": "Teiche, Weiher, langsame Flussabschnitte — Oberpfälzer Karpfenland",
+      "german_name_origin": "'Karpfen' über lat. 'carpa' — keltischen Ursprungs",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Oberpfalz ist eines der ältesten Karpfenzuchtgebiete Europas. 'Oberpfälzer Karpfen' trägt eine EU-geschützte geografische Angabe (g.g.A.). Karpfen zu Weihnachten und Silvester ist in Bayern Tradition.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Karpfen' über lat. 'carpa' — keltischen Ursprungs",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Stockfisch-Karpfen am Spieß — fränkische Tradition",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Karpfen gebacken mit Biersauce — Oberpfälzer Weihnachtsklassiker",
+          "share_appeal": 5,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Herbst ist Hauptsaison — Abfischung der Karpfenteiche ab Oktober",
+          "share_appeal": 3,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Karpfen beißen besser bei Warmfronten als bei Mondphasen — Wetter wichtiger als Mond",
+          "share_appeal": 3,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "REGIONAL: Oberpfälzer Karpfenteich als Hintergrund = regionale Identität. TIPP: Bei Karpfen ist Gewicht kulturell wichtiger als Länge — Gewichtsangabe auf der Karte priorisieren."
+    },
+    "tinca_tinca": {
+      "name_de": "Schleie",
+      "name_la": "Tinca tinca",
+      "priority_tier": 3,
+      "typical_size_cm": "20–55",
+      "habitat_de": "Verkrautete Stillgewässer, Teiche, Altwasser",
+      "german_name_origin": "'Schleie' von mhd. 'slīe' — die Schleimige (nach der Schleimschicht)",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Schleie hat eine heilende Schleimschicht — im Mittelalter wurde sie als 'Doktorfisch' auf Wunden gelegt. Ihr goldgrüner Schimmer macht sie zu einem der schönsten Friedfische.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Schleie' von mhd. 'slīe' — die Schleimige (nach der Schleimschicht)",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Schleie im Räucherofen — mild und butterweich",
+          "share_appeal": 3,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Schleienfilet in Weißweinsauce mit Petersilienkartoffeln",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Frühling bis Herbst — aktiv bei warmem Wasser über 18°C",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Dämmerungsaktiv — Neumond-Abende können produktiv sein",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "GOLDGRÜN: Farbe nur frisch sichtbar — sofort fotografieren. Schleimschicht schimmert."
+    },
+    "abramis_brama": {
+      "name_de": "Brachse",
+      "name_la": "Abramis brama",
+      "priority_tier": 3,
+      "typical_size_cm": "25–60",
+      "habitat_de": "Seen, langsame Flüsse, Kanäle — Schwarmfisch am Grund",
+      "german_name_origin": "'Brachse' / 'Brasse' — von ahd. 'brahsema', Breite/Platte",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Große Brachsen werden in Bayern 'Blei' genannt. Ein Schwarm fressender Brachsen kann den Gewässergrund regelrecht umpflügen und hinterlässt sichtbare Fresstrichter.",
+          "share_appeal": 4,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Brachse' / 'Brasse' — von ahd. 'brahsema', Breite/Platte",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Brachsenfilet geräuchert — die Gräten lösen sich besser",
+          "share_appeal": 3,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Brachse als Fischfrikadelle — perfekt gegen das Grätenproblem",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig — Frühsommer am produktivsten",
+          "share_appeal": 1,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Grundfisch — wenig mondabhängig",
+          "share_appeal": 1,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "FLACH: Hochrückiger Fisch — Hochformat kann besser passen als Querformat."
+    },
+    "rutilus_rutilus": {
+      "name_de": "Rotauge",
+      "name_la": "Rutilus rutilus",
+      "priority_tier": 3,
+      "typical_size_cm": "10–30",
+      "habitat_de": "Überall — Seen, Flüsse, Kanäle, Teiche",
+      "german_name_origin": "'Rotauge' / 'Plötze' — nach den namensgebenden roten Augen",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Das Rotauge ist der häufigste Fisch Bayerns. Ein 40-cm-Rotauge ist eine echte Rarität und wird unter Friedfisch-Anglern als Trophäe gefeiert.",
+          "share_appeal": 3,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Rotauge' / 'Plötze' — nach den namensgebenden roten Augen",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Rotaugen über Erlenholz räuchern — Snack am Wasser",
+          "share_appeal": 3,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Rotauge-Fischburger — gewolft löst sich das Grätenproblem",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig — Frühling und Herbst am besten",
+          "share_appeal": 1,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Schwarmfisch — Beißphasen korrelieren eher mit Tageszeit als Mondphase",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "SELTEN FOTOGRAFIERT: Nur Kapitale landen in der Kamera. Falls vorhanden = starke Glaubwürdigkeit."
+    },
+    "squalius_cephalus": {
+      "name_de": "Aitel",
+      "name_la": "Squalius cephalus",
+      "priority_tier": 3,
+      "typical_size_cm": "20–50",
+      "habitat_de": "Fließgewässer aller Art — Naab, Vils, Pfreimd",
+      "german_name_origin": "'Aitel' / 'Döbel' — 'Aitel' ist bairisch, 'Döbel' norddeutsch",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Aitel ist der Allesfresser unter den bayerischen Fischen — er frisst Kirschen, Käse und sogar kleine Mäuse die ins Wasser fallen. In der Oberpfalz ein klassischer Sommerabend-Fang.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Aitel' / 'Döbel' — 'Aitel' ist bairisch, 'Döbel' norddeutsch",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Aitel am Grill mit Knoblauch-Kräuterbutter",
+          "share_appeal": 3,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Aitel-Fischlaibchen — gewolft wegen der Y-Gräten",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig — Sommer ist Topzeit für Oberflächenfang",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Oberflächennah bei Dämmerung — Mondlicht beeinflusst Aktivität",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "OBERPFALZ-LOKAL: Naab/Vils als Hintergrund = regional authentisch."
+    },
+    "perca_fluviatilis": {
+      "name_de": "Flussbarsch",
+      "name_la": "Perca fluviatilis",
+      "priority_tier": 4,
+      "typical_size_cm": "15–40",
+      "habitat_de": "Überall — der Generalist unter den Raubfischen",
+      "german_name_origin": "'Barsch' von ahd. 'bars' — der Stachelige (nach den Rückenflossenstacheln)",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Flussbarsch ist der beliebteste Zielfisch für Angeleinsteiger in Bayern. Seine Streifen sind wie Fingerabdrücke — keine zwei Barsche sehen gleich aus. Ein 40-cm-Barsch gilt als Kapitaler.",
+          "share_appeal": 4,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Barsch' von ahd. 'bars' — der Stachelige (nach den Rückenflossenstacheln)",
+          "share_appeal": 3,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Barschfilet am Lagerfeuer — knusprig in der Pfanne",
+          "share_appeal": 3,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Barschfilet in Bierteig — fränkischer Klassiker",
+          "share_appeal": 4,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Ganzjährig — Herbst ist die beste Großbarsch-Saison",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Raubfisch — Dämmerung produktiver als spezifische Mondphase",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "STREIFEN: Markante Zeichnung kommt gut auf der Karte. Anfänger-Fang = breite Zielgruppe."
+    },
+    "anguilla_anguilla": {
+      "name_de": "Aal",
+      "name_la": "Anguilla anguilla",
+      "priority_tier": 4,
+      "typical_size_cm": "40–100",
+      "habitat_de": "Flüsse, Seen, Gräben — nachtaktiver Bodenbewohner",
+      "german_name_origin": "'Aal' — urgermanisch, eines der ältesten Fischwörter überhaupt",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Der Europäische Aal wandert zum Laichen über 5.000 km bis in die Sargassosee — und niemand hat je einen Aal beim Laichen beobachtet. Eines der größten Rätsel der Biologie.",
+          "share_appeal": 5,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Aal' — urgermanisch, eines der ältesten Fischwörter überhaupt",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Aal am Räucherhaken — der Klassiker am Wasser",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Aal grün (Aal in Dillsauce) — norddeutscher Import in Bayern",
+          "share_appeal": 3,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Sommer — nachtaktiv bei warmem Wetter",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Nachtaktiv — Neumond-Nächte sind die besten Aalnächte",
+          "share_appeal": 4,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "UNGEWÖHNLICH: Schlangenform fällt auf der Karte sofort auf. Polarisiert — manche finden Aale unheimlich."
+    },
+    "coregonus_spp": {
+      "name_de": "Renke",
+      "name_la": "Coregonus spp.",
+      "priority_tier": 4,
+      "typical_size_cm": "25–55",
+      "habitat_de": "Tiefe Voralpenseen — Ammersee, Starnberger See, Chiemsee",
+      "german_name_origin": "'Renke' bayerisch / 'Felchen' schwäbisch — regionaler Namensklassiker",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Renke ist DER Speisefisch der bayerischen Voralpenseen. Renke Müllerin am Starnberger See ist ein Kulturgut. Je nach See unterscheiden Biologen verschiedene Renkenformen.",
+          "share_appeal": 4,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Renke' bayerisch / 'Felchen' schwäbisch — regionaler Namensklassiker",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "recipe_camp": {
+          "text_de": "Renke am Steckerl über dem Feuer — simpel und perfekt",
+          "share_appeal": 4,
+          "icon": "🏕️"
+        },
+        "recipe_home": {
+          "text_de": "Renke Müllerin — in Butter gebraten mit Kartoffelsalat",
+          "share_appeal": 5,
+          "icon": "🍳"
+        },
+        "season_hint": {
+          "text_de": "Regeln stark gewässerabhängig — beim Fischereiverein nachfragen",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Tiefwasserfisch — Mondphase sekundär zu Temperaturschichtung",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "ALPENSEE: Seekulisse ist das Motiv. KEIN BLITZ: Die losen Silberschuppen wirken wie winzige Spiegel — Blitz erzeugt komplette Überbelichtung. Natürliches Licht nutzen."
+    },
+    "chondrostoma_nasus": {
+      "name_de": "Nase",
+      "name_la": "Chondrostoma nasus",
+      "priority_tier": 4,
+      "typical_size_cm": "25–50",
+      "habitat_de": "Fließgewässer mit kiesigem Grund — historisch häufig in bayerischen Flüssen",
+      "german_name_origin": "'Nase' — nach dem nasenartigen Überbiss der Oberlippe",
+      "blocks": {
+        "fun_fact": {
+          "text_de": "Die Nase war einst einer der häufigsten Fische bayerischer Flüsse. Der Bestand ist stark zurückgegangen. In manchen Regionen laufen Wiederansiedlungsprogramme. Fang nur wenn lokal erlaubt.",
+          "share_appeal": 4,
+          "icon": "💡"
+        },
+        "name_origin": {
+          "text_de": "'Nase' — nach dem nasenartigen Überbiss der Oberlippe",
+          "share_appeal": 4,
+          "icon": "📖"
+        },
+        "ecology_predator": {
+          "text_de": "🌿 Die Nase schabt mit ihrer verhornten Unterlippe Algen von Steinen — eine einzigartige Ernährungsweise unter europäischen Flussfischen. Hauptfeinde: Hecht und Zander, also genau die Arten, die Angler gezielt befischen.",
+          "share_appeal": 4,
+          "icon": "🌿",
+          "is_ecology_substitute": true,
+          "substitutes_for": "recipe_camp"
+        },
+        "ecology_behavior": {
+          "text_de": "🌿 Comeback-Geschichte — in mehreren bayerischen Flüssen (Isar, Loisach, Amper) laufen aktive Wiederansiedlungsprogramme. Wer eine Nase fängt, hält ein Stück Naturschutz-Erfolg in der Hand.",
+          "share_appeal": 5,
+          "icon": "🌿",
+          "is_ecology_substitute": true,
+          "substitutes_for": "recipe_home"
+        },
+        "season_hint": {
+          "text_de": "Stark regional unterschiedlich — viele Bestände geschützt — lokal informieren",
+          "share_appeal": 2,
+          "icon": "📅"
+        },
+        "moon_solunar": {
+          "text_de": "Schwarmfisch — Massenwanderungen zum Laichen sind mondunabhängig",
+          "share_appeal": 2,
+          "icon": "🌙"
+        }
+      },
+      "regulations_link": "https://www.gesetze-bayern.de/Content/Document/BayAVFiG",
+      "photo_notes": "SELTEN: Falls ein Kontakt eine Nase fotografiert hat = stark bildungswert für die Karte."
+    }
+  }
+}

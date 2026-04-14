@@ -1,0 +1,315 @@
+{
+  "schema_version": "1.0",
+  "engine_name": "SnapCard",
+  "engine_tagline": "Camera → AI ID → Styled Card → Share",
+  "last_updated": "2026-04-13",
+  "default_domain": "fishing",
+  "domains": {
+    "fishing": {
+      "domain_id": "fishing",
+      "display_name": "Schnappfang — Fangkarten",
+      "status": "active",
+      "locale": "de",
+      "brand_url": "schnappfang.de",
+      "description": "Catch cards for German recreational anglers. AI fish identification, fun facts, recipes, and styled sharing cards.",
+      "initial_market": "Bayern, Deutschland",
+      "expansion_markets": ["DACH (DE/AT/CH)", "EU freshwater"],
+      "subject_type": "Fish species",
+      "subject_count": 18,
+      "ai_identification": {
+        "service": "claude_vision",
+        "model": "claude-sonnet-4-20250514",
+        "prompt_context": "Freshwater fish species commonly found in Bavarian (Bayern) waters",
+        "confidence_threshold_confirmed": 0.85,
+        "confidence_threshold_probable": 0.60,
+        "offline_model_planned": true,
+        "offline_model_framework": "expo-ai-kit / ExecuTorch"
+      },
+      "block_types": [
+        { "type": "fun_fact", "icon": "💡", "safety_critical": false, "share_appeal": 5 },
+        { "type": "name_origin", "icon": "📖", "safety_critical": false, "share_appeal": 4 },
+        { "type": "recipe_camp", "icon": "🏕️", "safety_critical": false, "share_appeal": 4 },
+        { "type": "recipe_home", "icon": "🍳", "safety_critical": false, "share_appeal": 3 },
+        { "type": "habitat", "icon": "🌊", "safety_critical": false, "share_appeal": 2 },
+        { "type": "season_hint", "icon": "📅", "safety_critical": false, "share_appeal": 2 },
+        { "type": "regulations_link", "icon": "⚖️", "safety_critical": true, "share_appeal": 1 },
+        { "type": "moon_solunar", "icon": "🌙", "safety_critical": false, "share_appeal": 3 },
+        { "type": "ecology_predator", "icon": "🌿", "safety_critical": false, "share_appeal": 3 },
+        { "type": "ecology_prey", "icon": "🌿", "safety_critical": false, "share_appeal": 3 },
+        { "type": "ecology_behavior", "icon": "🌿", "safety_critical": false, "share_appeal": 4 },
+        { "type": "conservation", "icon": "🛡️", "safety_critical": true, "share_appeal": 3 },
+        { "type": "cultural", "icon": "🏛️", "safety_critical": false, "share_appeal": 4 }
+      ],
+      "templates": [
+        {
+          "id": "klassisch",
+          "name": "Klassisch",
+          "palette_summary": "Forest green + warm gold",
+          "bg_primary": "#1a2e1a",
+          "accent": "#d4a853",
+          "domain_exclusive": false
+        },
+        {
+          "id": "bayern",
+          "name": "Bayern",
+          "palette_summary": "Bavarian blue + white",
+          "bg_primary": "#0b3d91",
+          "accent": "#ffffff",
+          "domain_exclusive": true
+        },
+        {
+          "id": "lagerfeuer",
+          "name": "Lagerfeuer",
+          "palette_summary": "Dark wood + campfire orange",
+          "bg_primary": "#2d1810",
+          "accent": "#e8732a",
+          "domain_exclusive": false
+        }
+      ],
+      "compliance": {
+        "disclaimer": "Alle Angaben ohne Gewähr. Es gelten die gesetzlichen Bestimmungen des BayFiG/AVBayFiG.",
+        "data_source": "AVBayFiG (Verordnung zur Ausführung des Bayerischen Fischereigesetzes)",
+        "dataset_stand": "2026-04",
+        "photo_sensitivity": "standard",
+        "gps_requires_consent": true,
+        "legal_warnings": [
+          {
+            "region": "CH",
+            "text": "In der Schweiz ist Catch & Release für Fotografie verboten (TSchG Art. 3). Fangkarten müssen den Fang als Nahrungserwerb rahmen.",
+            "citation": "TSchG Art. 3 / Entnahmeabsicht",
+            "severity": "warning"
+          },
+          {
+            "region": "AT",
+            "text": "Österreich verschärft Tierschutzregeln gegen lebendes Fischposing. Pro-Bundesland-Fragmentierung beachten.",
+            "citation": "Bundes-Tierschutzgesetz",
+            "severity": "info"
+          }
+        ]
+      },
+      "reusable_snippets": ["SC-001", "SC-002", "SC-003", "SC-004", "SC-005", "SC-006", "SC-007", "SC-008", "SC-009", "SC-010"],
+      "estimated_mvp_weeks": 6
+    },
+
+    "mushroom_foraging": {
+      "domain_id": "mushroom_foraging",
+      "display_name": "Pilzfang — Pilzkarten",
+      "status": "concept",
+      "locale": "de",
+      "brand_url": "pilzfang.de",
+      "description": "Identification cards for mushroom foragers. AI mushroom ID with toxicity warnings, look-alikes, and recipes.",
+      "initial_market": "DACH",
+      "expansion_markets": ["EU", "UK"],
+      "subject_type": "Mushroom species",
+      "subject_count_estimate": 80,
+      "ai_identification": {
+        "service": "claude_vision",
+        "prompt_context": "Wild mushroom species commonly found in Central European forests",
+        "confidence_threshold_confirmed": 0.90,
+        "confidence_threshold_probable": 0.70,
+        "note": "Higher thresholds than fishing — misidentification can be lethal"
+      },
+      "block_types": [
+        { "type": "edibility", "icon": "✅", "safety_critical": true, "share_appeal": 5 },
+        { "type": "toxicity_warning", "icon": "☠️", "safety_critical": true, "share_appeal": 5 },
+        { "type": "look_alikes", "icon": "⚠️", "safety_critical": true, "share_appeal": 4 },
+        { "type": "habitat", "icon": "🌲", "safety_critical": false, "share_appeal": 2 },
+        { "type": "season", "icon": "📅", "safety_critical": false, "share_appeal": 2 },
+        { "type": "fun_fact", "icon": "💡", "safety_critical": false, "share_appeal": 4 },
+        { "type": "recipe", "icon": "🍳", "safety_critical": false, "share_appeal": 4 },
+        { "type": "ecology", "icon": "🌿", "safety_critical": false, "share_appeal": 3 }
+      ],
+      "templates_reusable_from_fishing": ["klassisch", "lagerfeuer"],
+      "templates_new": [
+        {
+          "id": "waldboden",
+          "name": "Waldboden",
+          "palette_summary": "Earthy brown + moss green",
+          "bg_primary": "#2a1f15",
+          "accent": "#6b8f4e"
+        }
+      ],
+      "compliance": {
+        "disclaimer": "Alle Angaben ohne Gewähr. Bei Unsicherheit niemals verzehren. Pilzberatungsstelle aufsuchen.",
+        "photo_sensitivity": "standard",
+        "gps_requires_consent": true,
+        "legal_warnings": [
+          {
+            "region": "DE",
+            "text": "Sammelmengen für Eigenbedarf (max. 1–2 kg/Tag) beachten. Naturschutzgebiete: Sammeln verboten.",
+            "citation": "BNatSchG §39",
+            "severity": "warning"
+          }
+        ],
+        "safety_note": "CRITICAL: Mushroom misidentification can be lethal. AI confidence must be treated with extreme caution. Always recommend professional verification."
+      },
+      "snippets_reusable_from_fishing": ["SC-001", "SC-002", "SC-004", "SC-005", "SC-006", "SC-007", "SC-008", "SC-009", "SC-010"],
+      "estimated_mvp_weeks": 4,
+      "micro_saas_signal": "Mushroom foraging is booming post-COVID. Strong Instagram/TikTok sharing culture. German Pilzvereine (mushroom clubs) are an engaged community similar to Angelvereine."
+    },
+
+    "birding": {
+      "domain_id": "birding",
+      "display_name": "Vogelfang — Vogelkarten",
+      "status": "concept",
+      "locale": "de",
+      "brand_url": "vogelfang.de",
+      "description": "Bird watching identification cards. AI bird ID from photos, with song, migration, and habitat info.",
+      "initial_market": "DACH",
+      "subject_type": "Bird species",
+      "subject_count_estimate": 250,
+      "ai_identification": {
+        "service": "claude_vision",
+        "prompt_context": "Bird species commonly observed in Central European habitats",
+        "confidence_threshold_confirmed": 0.80,
+        "confidence_threshold_probable": 0.55,
+        "note": "Lower thresholds acceptable — no safety consequence to misidentification"
+      },
+      "block_types": [
+        { "type": "fun_fact", "icon": "💡", "safety_critical": false, "share_appeal": 5 },
+        { "type": "song_description", "icon": "🎵", "safety_critical": false, "share_appeal": 4 },
+        { "type": "migration_pattern", "icon": "✈️", "safety_critical": false, "share_appeal": 3 },
+        { "type": "habitat", "icon": "🌳", "safety_critical": false, "share_appeal": 2 },
+        { "type": "conservation_status", "icon": "🛡️", "safety_critical": false, "share_appeal": 3 },
+        { "type": "similar_species", "icon": "🔍", "safety_critical": false, "share_appeal": 3 },
+        { "type": "season", "icon": "📅", "safety_critical": false, "share_appeal": 2 }
+      ],
+      "templates_reusable_from_fishing": ["klassisch"],
+      "templates_new": [
+        {
+          "id": "himmel",
+          "name": "Himmel",
+          "palette_summary": "Sky blue + cloud white",
+          "bg_primary": "#1a3a5c",
+          "accent": "#87ceeb"
+        },
+        {
+          "id": "morgenrot",
+          "name": "Morgenrot",
+          "palette_summary": "Dawn orange + deep purple",
+          "bg_primary": "#2d1b3d",
+          "accent": "#ff7f50"
+        }
+      ],
+      "snippets_reusable_from_fishing": ["SC-001", "SC-002", "SC-004", "SC-006", "SC-007", "SC-008", "SC-009", "SC-010"],
+      "estimated_mvp_weeks": 5,
+      "micro_saas_signal": "Bird watching is one of the fastest-growing outdoor hobbies in Europe. Strong crossover with photography community. NABU (German bird protection org) has 900K+ members."
+    },
+
+    "dive_log": {
+      "domain_id": "dive_log",
+      "display_name": "Tauchfang — Tauchkarten",
+      "status": "concept",
+      "locale": "de",
+      "brand_url": "tauchfang.de",
+      "description": "Dive log cards with marine species ID, dive stats, and underwater photography showcase.",
+      "initial_market": "DACH (lake diving) + Mediterranean",
+      "subject_type": "Marine/freshwater species",
+      "subject_count_estimate": 150,
+      "block_types": [
+        { "type": "fun_fact", "icon": "💡", "safety_critical": false, "share_appeal": 5 },
+        { "type": "depth_range", "icon": "📏", "safety_critical": false, "share_appeal": 3 },
+        { "type": "visibility", "icon": "👁️", "safety_critical": false, "share_appeal": 2 },
+        { "type": "water_temp", "icon": "🌡️", "safety_critical": false, "share_appeal": 2 },
+        { "type": "buddy", "icon": "🤝", "safety_critical": false, "share_appeal": 3 },
+        { "type": "marine_life", "icon": "🐠", "safety_critical": false, "share_appeal": 5 },
+        { "type": "conservation_status", "icon": "🛡️", "safety_critical": false, "share_appeal": 3 }
+      ],
+      "snippets_reusable_from_fishing": ["SC-001", "SC-002", "SC-004", "SC-006", "SC-007", "SC-008", "SC-010"],
+      "estimated_mvp_weeks": 5,
+      "micro_saas_signal": "Divers are heavy social media sharers. Underwater photography is premium content. Existing dive log apps (SSI, Shearwater) are utilitarian — no beautiful sharing cards."
+    },
+
+    "hiking_summit": {
+      "domain_id": "hiking_summit",
+      "display_name": "Gipfelfang — Gipfelkarten",
+      "status": "concept",
+      "locale": "de",
+      "brand_url": "gipfelfang.de",
+      "description": "Summit cards for hikers. Photo + peak ID, elevation, route info, and alpine flora/fauna.",
+      "initial_market": "Bayern / Alpenraum",
+      "subject_type": "Mountain peaks / trails",
+      "subject_count_estimate": 500,
+      "block_types": [
+        { "type": "elevation", "icon": "⛰️", "safety_critical": false, "share_appeal": 5 },
+        { "type": "fun_fact", "icon": "💡", "safety_critical": false, "share_appeal": 4 },
+        { "type": "trail_difficulty", "icon": "🥾", "safety_critical": true, "share_appeal": 3 },
+        { "type": "route_time", "icon": "⏱️", "safety_critical": false, "share_appeal": 3 },
+        { "type": "best_season", "icon": "📅", "safety_critical": false, "share_appeal": 2 },
+        { "type": "nearby_huts", "icon": "🏔️", "safety_critical": false, "share_appeal": 3 },
+        { "type": "flora_fauna", "icon": "🌿", "safety_critical": false, "share_appeal": 4 }
+      ],
+      "templates_reusable_from_fishing": ["lagerfeuer"],
+      "templates_new": [
+        {
+          "id": "alpengluehn",
+          "name": "Alpenglühn",
+          "palette_summary": "Alpine rose + granite grey",
+          "bg_primary": "#3a3a3a",
+          "accent": "#e85d75"
+        }
+      ],
+      "snippets_reusable_from_fishing": ["SC-001", "SC-002", "SC-004", "SC-006", "SC-007", "SC-008", "SC-009", "SC-010"],
+      "estimated_mvp_weeks": 4,
+      "micro_saas_signal": "Summit selfies are among the most shared outdoor photos. Komoot and Bergfex prove the market. No one makes beautiful summit cards — just utilitarian route logs."
+    }
+  },
+
+  "pipeline_patterns": [
+    {
+      "id": "PP-001",
+      "title": "Offline-First AI Identification",
+      "problem": "User captures a photo in the field with no connectivity. AI identification must be queued and processed when online.",
+      "solution": "Capture photo → extract EXIF → store in local filesystem → enqueue AI request in MMKV → listen for connectivity via NetInfo → process queue → return result to UI.",
+      "snippet_sequence": ["SC-009", "SC-008"],
+      "stages": ["capture", "identify"],
+      "implemented_by": ["fishing"],
+      "flow": "capture(VisionCamera) → exif(exifr) → store(FileSystem) → queue(MMKV) → [online?] → identify(Claude Vision) → result",
+      "estimated_hours": 8
+    },
+    {
+      "id": "PP-002",
+      "title": "Server-Side Card Rendering",
+      "problem": "Generate a styled card PNG from structured data without a browser or headless Chrome.",
+      "solution": "Use @vercel/og (satori + resvg) to render JSX templates to PNG on Vercel Edge Runtime. Design tokens centralised, templates composable.",
+      "snippet_sequence": ["SC-002", "SC-003", "SC-001", "SC-004"],
+      "stages": ["render", "export"],
+      "implemented_by": ["fishing"],
+      "flow": "tokens(config) → template(JSX) → blocks(parser) → render(satori) → png(resvg)",
+      "estimated_hours": 6
+    },
+    {
+      "id": "PP-003",
+      "title": "Native Card Capture & Share",
+      "problem": "Render a card as a React Native component and share it as an image to social platforms.",
+      "solution": "Render card component → view-shot captures to PNG → react-native-share targets specific apps (Instagram, WhatsApp, Pinterest).",
+      "snippet_sequence": ["SC-002", "SC-010"],
+      "stages": ["render", "export", "share"],
+      "implemented_by": [],
+      "flow": "tokens(config) → component(RN View) → capture(view-shot) → share(react-native-share)",
+      "estimated_hours": 4
+    },
+    {
+      "id": "PP-004",
+      "title": "Batch Card Generation for Smoke Testing",
+      "problem": "Generate 100+ card variants from a CSV of subject data to validate templates and content visually.",
+      "solution": "Parse CSV → iterate subjects × templates × formats → hit card API → save PNGs to disk.",
+      "snippet_sequence": ["SC-005", "SC-006", "SC-001"],
+      "stages": ["enrich", "render", "export"],
+      "implemented_by": ["fishing"],
+      "flow": "csv(parser) → iterate(species × templates × formats) → api(/api/card) → save(fs)",
+      "estimated_hours": 2
+    }
+  ],
+
+  "reuse_matrix": {
+    "_description": "Shows which snippets each future domain can reuse from the fishing (Schnappfang) implementation. Higher reuse = faster time to market.",
+    "snippet_count_total": 10,
+    "reuse_by_domain": {
+      "mushroom_foraging": { "reusable": 9, "new_needed": 1, "reuse_pct": 90 },
+      "birding": { "reusable": 8, "new_needed": 2, "reuse_pct": 80 },
+      "dive_log": { "reusable": 7, "new_needed": 3, "reuse_pct": 70 },
+      "hiking_summit": { "reusable": 8, "new_needed": 2, "reuse_pct": 80 }
+    }
+  }
+}
